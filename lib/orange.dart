@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'apple.dart';
 
 class Orange extends StatelessWidget {
+  const Orange({super.key});
+
   @override
   Widget build(BuildContext context) {
     final appleModel = Provider.of<AppleModel>(context);
@@ -29,5 +31,25 @@ class Orange extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class OrangeModel extends ChangeNotifier {
+  var orangeName = "Orange";
+  var orangeCount = 0;
+
+  void increaseOrange() {
+    orangeCount += 1;
+    notifyListeners();
+  }
+
+  void decreaseOrange() {
+    orangeCount -= 1;
+    notifyListeners();
+  }
+
+  void setNewName(String input) {
+    orangeName = input;
+    notifyListeners();
   }
 }

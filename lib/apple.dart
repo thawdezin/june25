@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:june30/orange.dart';
 import 'package:provider/provider.dart';
 
 class Apple extends StatelessWidget {
+  const Apple({super.key});
+
   @override
   Widget build(BuildContext context) {
     final appleModel = Provider.of<AppleModel>(context);
+    final orangeModel = Provider.of<OrangeModel>(context);
 
     return Scaffold(
       appBar: AppBar(title: Text("Apple!")),
@@ -13,12 +17,32 @@ class Apple extends StatelessWidget {
           Text(
             "I am ${appleModel.appleName} and I have ${appleModel.appleCount}",
           ),
+          Text(
+            "I am ${orangeModel.orangeName} and I have ${orangeModel.orangeCount}",
+          ),
           ElevatedButton(
             onPressed: () {
               appleModel.incrementAppleCount();
             },
             child: Text("Increase Apple Count"),
           ),
+
+
+          ElevatedButton(
+            onPressed: () {
+             orangeModel.setNewName("OK lar?");
+            },
+            child: Text("new name for orange"),
+          ),
+
+
+          ElevatedButton(
+            onPressed: () {
+             orangeModel.increaseOrange();
+            },
+            child: Text("Increase Orange Count"),
+          ),
+
         ],
       ),
     );
