@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'apple.dart';
 
@@ -38,6 +39,12 @@ class OrangeModel extends ChangeNotifier {
   var orangeName = "Orange";
   var orangeCount = 0;
 
+  OrangeModel(){
+    _loadFromPrefs();
+  }
+
+
+
   void increaseOrange() {
     orangeCount += 1;
     notifyListeners();
@@ -45,11 +52,27 @@ class OrangeModel extends ChangeNotifier {
 
   void decreaseOrange() {
     orangeCount -= 1;
+    _saveToPrefs();
     notifyListeners();
   }
 
   void setNewName(String input) {
     orangeName = input;
+    _saveToPrefs();
     notifyListeners();
   }
+
+  Future<void> _loadFromPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    orangeCount = prefs.getInt("orangeCount") ?? 0;
+    orangeName = prefs.getString("orangeName") ?? "Orange";
+
+  }
+
+  _saveToPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString("orangeName", orangeName);
+    await prefs.setInt("orangeCount",orangeCount);
+  }
+
 }
